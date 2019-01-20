@@ -31,7 +31,7 @@
         methods:{
             changePrice(data){
                 // console.log(data)
-                this.$store.commit(changePrice, {data})
+                this.$store.commit('changePrice',data)
             }
         }
     }

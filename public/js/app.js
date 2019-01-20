@@ -1906,22 +1906,10 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    changePrice: function (_changePrice) {
-      function changePrice(_x) {
-        return _changePrice.apply(this, arguments);
-      }
-
-      changePrice.toString = function () {
-        return _changePrice.toString();
-      };
-
-      return changePrice;
-    }(function (data) {
+    changePrice: function changePrice(data) {
       // console.log(data)
-      this.$store.commit(changePrice, {
-        data: data
-      });
-    })
+      this.$store.commit('changePrice', data);
+    }
   }
 });
 
