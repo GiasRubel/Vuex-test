@@ -4,17 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" description="factory(\App\User::class,10)-&gt;create();" line="13" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ccccb672-9fd0-414e-a7e7-2c50b793d9e9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/Full.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/views/Customer.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/views/Product.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/router/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/store/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/vue-home.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="ccccb672-9fd0-414e-a7e7-2c50b793d9e9" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -357,12 +347,12 @@
       <option name="presentableId" value="Default" />
       <updated>1547956604143</updated>
       <workItem from="1547956605675" duration="975000" />
-      <workItem from="1547957648269" duration="23284000" />
+      <workItem from="1547957648269" duration="23556000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24259000" />
+    <option name="totallyTimeSpent" value="24531000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
