@@ -4,11 +4,10 @@
             <div class="card-body">
                 <h5> This is  Customer Component</h5>
                 <ul v-for="(product,index) in saleProduct" :key="product.id">
-                    <li>{{ product.title }} => Price: {{product.price}}
-                        => <button class="btn btn-primary btn-sm" @click="changePrice(product.price)">Change Price</button></li>
+                    <li>{{ product.title }} => Price: {{product.price}}</li>
                 </ul>
 
-
+                <button class="btn btn-primary" @click="changePrice()">Change Price</button>
             </div>
         </div>
     </div>
@@ -29,9 +28,8 @@
         },
 
         methods:{
-            changePrice(data){
-                // console.log(data)
-                this.$store.commit('changePrice',data)
+            changePrice(){
+                this.$store.commit('changePrice');
             }
         }
     }

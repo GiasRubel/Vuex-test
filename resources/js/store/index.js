@@ -9,13 +9,13 @@ const index = new Vuex.Store({
     },
     getters: {
         saleProduct: state => {
-
+            // console.log(state.products)
             var saleProduct = state.products.map(product => {
                 return {
-                    title: product.title,
-                    price: product.price/2
+                    price: product.price/2,
+                    title: product.title
                 }
-            });
+            })
 
             return saleProduct;
         }
@@ -27,8 +27,10 @@ const index = new Vuex.Store({
             Vue.set(state, 'products', payload)
         },
 
-        changePrice: (state, payload) => {
-            console.log(payload)
+        changePrice: state => {
+            state.products.forEach(product => {
+                product.price = product.price*2
+            })
         }
     },
     actions: {

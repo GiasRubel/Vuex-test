@@ -1894,7 +1894,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Customer",
   computed: {
@@ -1906,9 +1905,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    changePrice: function changePrice(data) {
-      // console.log(data)
-      this.$store.commit('changePrice', data);
+    changePrice: function changePrice() {
+      this.$store.commit('changePrice');
     }
   }
 });
@@ -37797,26 +37795,24 @@ var render = function() {
             return _c("ul", { key: product.id }, [
               _c("li", [
                 _vm._v(
-                  _vm._s(product.title) +
-                    " => Price: " +
-                    _vm._s(product.price) +
-                    "\n                    => "
-                ),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary btn-sm",
-                    on: {
-                      click: function($event) {
-                        _vm.changePrice(product.price)
-                      }
-                    }
-                  },
-                  [_vm._v("Change Price")]
+                  _vm._s(product.title) + " => Price: " + _vm._s(product.price)
                 )
               ])
             ])
-          })
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              on: {
+                click: function($event) {
+                  _vm.changePrice()
+                }
+              }
+            },
+            [_vm._v("Change Price")]
+          )
         ],
         2
       )
@@ -53216,10 +53212,11 @@ var index = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
   },
   getters: {
     saleProduct: function saleProduct(state) {
+      // console.log(state.products)
       var saleProduct = state.products.map(function (product) {
         return {
-          title: product.title,
-          price: product.price / 2
+          price: product.price / 2,
+          title: product.title
         };
       });
       return saleProduct;
@@ -53230,8 +53227,10 @@ var index = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
       console.log(payload);
       vue__WEBPACK_IMPORTED_MODULE_1___default.a.set(state, 'products', payload);
     },
-    changePrice: function changePrice(state, payload) {
-      console.log(payload);
+    changePrice: function changePrice(state) {
+      state.products.forEach(function (product) {
+        product.price = product.price * 2;
+      });
     }
   },
   actions: {
