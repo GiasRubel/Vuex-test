@@ -7,7 +7,7 @@
                     <li>{{ product.title }} => Price: {{product.price}}</li>
                 </ul>
 
-                <button class="btn btn-primary" @click="changePrice()">Change Price</button>
+                <button class="btn btn-primary" @click="changePrice()">increase Price</button>
             </div>
         </div>
     </div>

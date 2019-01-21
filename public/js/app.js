@@ -1935,12 +1935,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Product",
   // props: ['products'],
   computed: {
     products: function products() {
       return this.$store.state.products;
+    }
+  },
+  methods: {
+    reducePrice: function reducePrice() {
+      this.$store.dispatch('reducePrice');
     }
   },
   created: function created() {
@@ -37811,7 +37818,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Change Price")]
+            [_vm._v("increase Price")]
           )
         ],
         2
@@ -37857,7 +37864,20 @@ var render = function() {
                 )
               ])
             ])
-          })
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              on: {
+                click: function($event) {
+                  _vm.reducePrice()
+                }
+              }
+            },
+            [_vm._v("reduce Price")]
+          )
         ],
         2
       )
@@ -53231,6 +53251,11 @@ var index = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
       state.products.forEach(function (product) {
         product.price = product.price * 2;
       });
+    },
+    reducePrice: function reducePrice(state) {
+      state.products.forEach(function (product) {
+        product.price = product.price / 2;
+      });
     }
   },
   actions: {
@@ -53272,7 +53297,12 @@ var index = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
       }
 
       return fetchProduct;
-    }()
+    }(),
+    reducePrice: function reducePrice(context) {
+      setTimeout(function () {
+        context.commit('reducePrice');
+      }, 1000);
+    }
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = (index);

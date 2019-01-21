@@ -6,6 +6,8 @@
                 <ul v-for="(product,index) in products" :key="product.id">
                     <li>{{ product.title }} => Price: {{product.price}}</li>
                 </ul>
+
+                <button class="btn btn-primary" @click="reducePrice()">reduce Price</button>
             </div>
         </div>
     </div>
@@ -21,6 +23,12 @@
                 return this.$store.state.products
             }
 
+        },
+
+        methods:{
+            reducePrice(){
+                this.$store.dispatch('reducePrice')
+            }
         },
         created() {
             this.$store.dispatch('fetchProduct')

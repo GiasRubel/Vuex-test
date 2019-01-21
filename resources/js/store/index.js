@@ -31,6 +31,12 @@ const index = new Vuex.Store({
             state.products.forEach(product => {
                 product.price = product.price*2
             })
+        },
+
+        reducePrice: state => {
+            state.products.forEach(product => {
+                product.price = product.price/2
+            })
         }
     },
     actions: {
@@ -45,6 +51,12 @@ const index = new Vuex.Store({
                     return {msg: error.response.data.errors}
                 }))
         },
+
+        reducePrice: context => {
+            setTimeout(function () {
+                context.commit('reducePrice')
+            },1000)
+        }
     }
 });
 
