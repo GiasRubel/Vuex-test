@@ -9,12 +9,12 @@
         <!--<router-link :to="{ name:'Product' }" tag="button" type="button" class="btn btn-success btn-sm">Go to Customer-->
             <!--<i class="fa fa-eye"></i></router-link>-->
         <div class="row">
-            <div class="com-md-6">
+
                 <Product></Product>
-            </div>
-            <div class="com-md-6">
+
+
                 <Customer></Customer>
-            </div>
+
         </div>
 
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="col-md-6">
         <div class="card">
             <div class="card-body">
                <h5> This is  Product Component</h5>
@@ -20,7 +20,7 @@
 
         computed: {
             products(){
-                return this.$store.state.products
+                return this.$store.state.products.products
             }
 
         },

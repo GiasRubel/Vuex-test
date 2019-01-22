@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import products from './modules/product'
 
 Vue.use(Vuex);
 
 const index = new Vuex.Store({
     state: {
-        products: []
+        // products: []
     },
     getters: {
-        saleProduct: state => {
-            // console.log(state.products)
-            var saleProduct = state.products.map(product => {
+        saleProduct: (state, getters, rootstate) => {
+
+            var saleProduct = rootstate.products.map(product => {
                 return {
                     price: product.price/2,
                     title: product.title
@@ -22,41 +23,45 @@ const index = new Vuex.Store({
 
     },
     mutations: {
-        fetchProduct: (state, payload) => {
-            console.log(payload);
-            Vue.set(state, 'products', payload)
-        },
+        // fetchProduct: (state, payload) => {
+        //     console.log(payload);
+        //     Vue.set(state, 'products', payload)
+        // },
 
-        changePrice: state => {
-            state.products.forEach(product => {
-                product.price = product.price*2
-            })
-        },
+        // changePrice: state => {
+        //     state.products.forEach(product => {
+        //         product.price = product.price*2
+        //     })
+        // },
 
-        reducePrice: state => {
-            state.products.forEach(product => {
-                product.price = product.price/2
-            })
-        }
+        // reducePrice: state => {
+        //     state.products.forEach(product => {
+        //         product.price = product.price/2
+        //     })
+        // }
     },
     actions: {
 
-        async fetchProduct ({ commit }) {
-            commit('fetchProduct', await
-                axios.get('/products').then(response => {
-                   return  response.data;
+        // async fetchProduct ({ commit }) {
+        //     commit('fetchProduct', await
+        //         axios.get('/products').then(response => {
+        //            return  response.data;
+        //
+        //         }).catch(error => {
+        //             console.log(error)
+        //             return {msg: error.response.data.errors}
+        //         }))
+        // },
+        //
+        // reducePrice: context => {
+        //     setTimeout(function () {
+        //         context.commit('reducePrice')
+        //     },1000)
+        // }
+    },
 
-                }).catch(error => {
-                    console.log(error)
-                    return {msg: error.response.data.errors}
-                }))
-        },
-
-        reducePrice: context => {
-            setTimeout(function () {
-                context.commit('reducePrice')
-            },1000)
-        }
+    modules: {
+        products
     }
 });
 
