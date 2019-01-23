@@ -1892,19 +1892,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Customer",
   computed: {
-    // products(){
-    //     return this.$store.state.products
-    // },
     saleProduct: function saleProduct() {
       return this.$store.getters.saleProduct;
-    }
-  },
-  methods: {// changePrice(){
-    //     this.$store.commit('changePrice');
+    } // getProduct() {
+    //     return this.$store.getters.getProduct
     // }
+
+  },
+  methods: {
+    changePrice: function changePrice() {
+      // this.$store.commit('changePrice');
+      this.$store.dispatch('changePrice');
+    }
   }
 });
 
@@ -1919,6 +1922,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1934,19 +1942,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Product",
-  // props: ['products'],
-  computed: {
-    products: function products() {
-      return this.$store.state.products.products;
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    products: function products(state) {
+      return state.products.products;
     }
-  },
-  methods: {
-    reducePrice: function reducePrice() {
-      this.$store.dispatch('reducePrice');
-    }
-  },
+  })),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['reducePrice'])),
   created: function created() {
     this.$store.dispatch('fetchProduct');
   }
@@ -37809,7 +37813,20 @@ var render = function() {
                 )
               ])
             ])
-          })
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              on: {
+                click: function($event) {
+                  _vm.changePrice()
+                }
+              }
+            },
+            [_vm._v("increase Price")]
+          )
         ],
         2
       )
@@ -53211,11 +53228,20 @@ __webpack_require__.r(__webpack_exports__);
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var index = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
-  state: {// products: []
+  state: {
+    newProducts: [{
+      id: 1,
+      name: 'kamal'
+    }, {
+      id: 2,
+      name: 'jamal'
+    }]
   },
   getters: {
-    saleProduct: function saleProduct(state, getters, rootstate) {
-      var saleProduct = rootstate.products.map(function (product) {
+    // getProduct:state => state.newProducts
+    // getProduct:(state, getters, rootState) => {return rootState.products.products }
+    saleProduct: function saleProduct(state, getters, rootState) {
+      var saleProduct = rootState.products.products.map(function (product) {
         return {
           price: product.price / 2,
           title: product.title
@@ -53228,18 +53254,15 @@ var index = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     //     console.log(payload);
     //     Vue.set(state, 'products', payload)
     // },
-    // changePrice: state => {
-    //     state.products.forEach(product => {
-    //         product.price = product.price*2
-    //     })
-    // },
+    // changePrice: state => state.changePrice
     // reducePrice: state => {
     //     state.products.forEach(product => {
     //         product.price = product.price/2
     //     })
     // }
   },
-  actions: {// async fetchProduct ({ commit }) {
+  actions: {
+    // async fetchProduct ({ commit }) {
     //     commit('fetchProduct', await
     //         axios.get('/products').then(response => {
     //            return  response.data;
@@ -53255,6 +53278,14 @@ var index = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     //         context.commit('reducePrice')
     //     },1000)
     // }
+    changePrice: function changePrice(_ref) {
+      var context = _ref.context,
+          commit = _ref.commit,
+          rootState = _ref.rootState;
+      rootState.products.products.forEach(function (product) {
+        product.price = product.price * 2;
+      }); // context.commit('changePrice')
+    }
   },
   modules: {
     products: _modules_product__WEBPACK_IMPORTED_MODULE_2__["default"]

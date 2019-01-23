@@ -6,17 +6,23 @@ Vue.use(Vuex);
 
 const index = new Vuex.Store({
     state: {
-        // products: []
+        newProducts: [
+            {id:1, name:'kamal'},
+            {id:2, name:'jamal'},
+        ]
     },
     getters: {
-        saleProduct: (state, getters, rootstate) => {
+       // getProduct:state => state.newProducts
+       // getProduct:(state, getters, rootState) => {return rootState.products.products }
 
-            var saleProduct = rootstate.products.map(product => {
+        saleProduct: (state, getters, rootState) => {
+
+            var saleProduct = rootState.products.products.map(product => {
                 return {
                     price: product.price/2,
                     title: product.title
                 }
-            })
+            });
 
             return saleProduct;
         }
@@ -28,11 +34,7 @@ const index = new Vuex.Store({
         //     Vue.set(state, 'products', payload)
         // },
 
-        // changePrice: state => {
-        //     state.products.forEach(product => {
-        //         product.price = product.price*2
-        //     })
-        // },
+        // changePrice: state => state.changePrice
 
         // reducePrice: state => {
         //     state.products.forEach(product => {
@@ -58,6 +60,14 @@ const index = new Vuex.Store({
         //         context.commit('reducePrice')
         //     },1000)
         // }
+        changePrice: ({context, commit, rootState}) =>{
+            rootState.products.products.forEach(product => {
+                        product.price = product.price*2
+                    })
+            // context.commit('changePrice')
+        }
+
+
     },
 
     modules: {

@@ -14,21 +14,29 @@
 </template>
 
 <script>
+    import { mapState, mapActions } from 'vuex'
     export default {
         name: "Product",
-        // props: ['products'],
 
         computed: {
-            products(){
-                return this.$store.state.products.products
-            }
+            // products(){
+            //     return this.$store.state.products.products
+            // }
+
+            ...mapState({
+                products: state => state.products.products
+            })
 
         },
 
         methods:{
-            reducePrice(){
-                this.$store.dispatch('reducePrice')
-            }
+            // reducePrice(){
+            //     this.$store.dispatch('reducePrice')
+            // }
+
+            ...mapActions([
+                'reducePrice'
+            ])
         },
         created() {
             this.$store.dispatch('fetchProduct')
