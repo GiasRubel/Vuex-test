@@ -1875,6 +1875,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _store_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store/types */ "./resources/js/store/types/index.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1893,22 +1899,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Customer",
-  computed: {
-    saleProduct: function saleProduct() {
-      return this.$store.getters.saleProduct;
-    } // getProduct() {
-    //     return this.$store.getters.getProduct
-    // }
-
-  },
-  methods: {
-    changePrice: function changePrice() {
-      // this.$store.commit('changePrice');
-      this.$store.dispatch('changePrice');
-    }
-  }
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+    saleProduct: _store_types__WEBPACK_IMPORTED_MODULE_1__["SALEPRODUCT"],
+    products: _store_types__WEBPACK_IMPORTED_MODULE_1__["PRODUCTS_LIST"]
+  })),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['changePrice', 'actualPrice']))
 });
 
 /***/ }),
@@ -37821,11 +37820,17 @@ var render = function() {
               staticClass: "btn btn-primary",
               on: {
                 click: function($event) {
-                  _vm.changePrice()
+                  _vm.changePrice(_vm.products)
                 }
               }
             },
             [_vm._v("increase Price")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            { staticClass: "btn btn-primary", on: { click: _vm.actualPrice } },
+            [_vm._v("Add 1 to Price")]
           )
         ],
         2
@@ -53223,75 +53228,85 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _modules_product__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/product */ "./resources/js/store/modules/product.js");
+/* harmony import */ var _modules_customer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/customer */ "./resources/js/store/modules/customer.js");
+
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var index = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
-  state: {
-    newProducts: [{
-      id: 1,
-      name: 'kamal'
-    }, {
-      id: 2,
-      name: 'jamal'
-    }]
-  },
-  getters: {
-    // getProduct:state => state.newProducts
-    // getProduct:(state, getters, rootState) => {return rootState.products.products }
-    saleProduct: function saleProduct(state, getters, rootState) {
-      var saleProduct = rootState.products.products.map(function (product) {
-        return {
-          price: product.price / 2,
-          title: product.title
-        };
-      });
-      return saleProduct;
-    }
-  },
-  mutations: {// fetchProduct: (state, payload) => {
-    //     console.log(payload);
-    //     Vue.set(state, 'products', payload)
-    // },
-    // changePrice: state => state.changePrice
-    // reducePrice: state => {
-    //     state.products.forEach(product => {
-    //         product.price = product.price/2
-    //     })
-    // }
-  },
-  actions: {
-    // async fetchProduct ({ commit }) {
-    //     commit('fetchProduct', await
-    //         axios.get('/products').then(response => {
-    //            return  response.data;
-    //
-    //         }).catch(error => {
-    //             console.log(error)
-    //             return {msg: error.response.data.errors}
-    //         }))
-    // },
-    //
-    // reducePrice: context => {
-    //     setTimeout(function () {
-    //         context.commit('reducePrice')
-    //     },1000)
-    // }
-    changePrice: function changePrice(_ref) {
-      var context = _ref.context,
-          commit = _ref.commit,
-          rootState = _ref.rootState;
-      rootState.products.products.forEach(function (product) {
-        product.price = product.price * 2;
-      }); // context.commit('changePrice')
-    }
-  },
   modules: {
-    products: _modules_product__WEBPACK_IMPORTED_MODULE_2__["default"]
+    products: _modules_product__WEBPACK_IMPORTED_MODULE_2__["default"],
+    customer: _modules_customer__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = (index);
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/customer.js":
+/*!************************************************!*\
+  !*** ./resources/js/store/modules/customer.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../types */ "./resources/js/store/types/index.js");
+var _getters;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var state = {
+  newProducts: [{
+    id: 1,
+    name: 'kamal'
+  }, {
+    id: 2,
+    name: 'jamal'
+  }]
+};
+var getters = (_getters = {}, _defineProperty(_getters, _types__WEBPACK_IMPORTED_MODULE_0__["SALEPRODUCT"], function (state, getters, rootState) {
+  var saleProduct = rootState.products.products.map(function (product) {
+    return {
+      price: product.price / 2,
+      title: product.title
+    };
+  });
+  return saleProduct;
+}), _defineProperty(_getters, _types__WEBPACK_IMPORTED_MODULE_0__["PRODUCTS_LIST"], function (state, getters, rootState) {
+  var products = rootState.products.products;
+  return products;
+}), _getters);
+var mutations = {
+  changePrice: function changePrice(state, payload) {
+    payload.forEach(function (product) {
+      product.price = product.price * 2;
+    });
+  }
+};
+var actions = {
+  actualPrice: function actualPrice(_ref) {
+    var context = _ref.context,
+        commit = _ref.commit,
+        rootState = _ref.rootState;
+    rootState.products.products.forEach(function (product) {
+      product.price = product.price + 1;
+      return product.price;
+    });
+  },
+  changePrice: function changePrice(context, payload) {
+    context.commit('changePrice', payload);
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions
+});
 
 /***/ }),
 
@@ -53382,6 +53397,23 @@ var actions = {
   mutations: mutations,
   actions: actions
 });
+
+/***/ }),
+
+/***/ "./resources/js/store/types/index.js":
+/*!*******************************************!*\
+  !*** ./resources/js/store/types/index.js ***!
+  \*******************************************/
+/*! exports provided: SALEPRODUCT, PRODUCTS_LIST */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SALEPRODUCT", function() { return SALEPRODUCT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PRODUCTS_LIST", function() { return PRODUCTS_LIST; });
+//getters
+var SALEPRODUCT = 'customer/SALEPRODUCT';
+var PRODUCTS_LIST = 'customer/PRODUCTS_LIST';
 
 /***/ }),
 

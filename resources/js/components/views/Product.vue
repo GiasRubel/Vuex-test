@@ -24,6 +24,7 @@
             // }
 
             ...mapState({
+
                 products: state => state.products.products
             })
 

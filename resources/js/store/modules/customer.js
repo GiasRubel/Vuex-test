@@ -1,39 +1,47 @@
-/*
+import * as types from '../types';
 const state = {
-    products: []
+    newProducts: [
+        {id: 1, name: 'kamal'},
+        {id: 2, name: 'jamal'},
+    ]
 };
 const getters = {
-    saleProduct: state => {
-        var saleProduct = state.products.map(product => {
+    [types.SALEPRODUCT]: (state, getters, rootState) => {
+
+        var saleProduct = rootState.products.products.map(product => {
             return {
-                price: product.price/2,
+                price: product.price / 2,
                 title: product.title
             }
         });
-        console.log(saleProduct);
+
         return saleProduct;
+    },
+
+    [types.PRODUCTS_LIST]: (state, getters, rootState) => {
+        var products = rootState.products.products;
+        return products;
     }
 };
 
 const mutations = {
-    changePrice: state => {
-        state.products.forEach(product => {
-            product.price = product.price*2
-        })
-    },
-
+    changePrice:(state, payload) => {
+      payload.forEach(product => {
+          product.price = product.price *2;
+      })
+    }
 };
 
 const actions = {
-    async fetchProduct ({ commit }) {
-        commit('fetchProduct', await
-            axios.get('/products').then(response => {
-                return  response.data;
+    actualPrice: ({context, commit, rootState}) => {
+        rootState.products.products.forEach(product => {
+             product.price =  product.price +1;
+             return product.price;
+        })
 
-            }).catch(error => {
-                console.log(error)
-                return {msg: error.response.data.errors}
-            }))
+    },
+    changePrice:(context, payload) => {
+        context.commit('changePrice',payload)
     }
 };
 
@@ -42,4 +50,4 @@ export default {
     getters,
     mutations,
     actions
-}*/
+}
