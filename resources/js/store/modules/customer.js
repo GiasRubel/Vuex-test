@@ -25,7 +25,7 @@ const getters = {
 };
 
 const mutations = {
-    changePrice:(state, payload) => {
+    [types.CHANGE_PRICE]:(state, payload) => {
       payload.forEach(product => {
           product.price = product.price *2;
       })
@@ -40,8 +40,9 @@ const actions = {
         })
 
     },
-    changePrice:(context, payload) => {
-        context.commit('changePrice',payload)
+
+    [types.CHANGE_PRICE]:(context, payload) => {
+        context.commit(types.CHANGE_PRICE,payload)
     }
 };
 

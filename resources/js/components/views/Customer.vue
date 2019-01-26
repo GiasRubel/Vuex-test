@@ -42,9 +42,11 @@
             // },
 
             ...mapActions([
-                'changePrice',
                 'actualPrice'
             ]),
+            ...mapActions({
+                changePrice: types.CHANGE_PRICE
+            })
 
 
         }

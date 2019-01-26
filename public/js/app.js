@@ -1907,7 +1907,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     saleProduct: _store_types__WEBPACK_IMPORTED_MODULE_1__["SALEPRODUCT"],
     products: _store_types__WEBPACK_IMPORTED_MODULE_1__["PRODUCTS_LIST"]
   })),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['changePrice', 'actualPrice']))
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['actualPrice']), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+    changePrice: _store_types__WEBPACK_IMPORTED_MODULE_1__["CHANGE_PRICE"]
+  }))
 });
 
 /***/ }),
@@ -53280,14 +53282,14 @@ var getters = (_getters = {}, _defineProperty(_getters, _types__WEBPACK_IMPORTED
   var products = rootState.products.products;
   return products;
 }), _getters);
-var mutations = {
-  changePrice: function changePrice(state, payload) {
-    payload.forEach(function (product) {
-      product.price = product.price * 2;
-    });
-  }
-};
-var actions = {
+
+var mutations = _defineProperty({}, _types__WEBPACK_IMPORTED_MODULE_0__["CHANGE_PRICE"], function (state, payload) {
+  payload.forEach(function (product) {
+    product.price = product.price * 2;
+  });
+});
+
+var actions = _defineProperty({
   actualPrice: function actualPrice(_ref) {
     var context = _ref.context,
         commit = _ref.commit,
@@ -53296,11 +53298,11 @@ var actions = {
       product.price = product.price + 1;
       return product.price;
     });
-  },
-  changePrice: function changePrice(context, payload) {
-    context.commit('changePrice', payload);
   }
-};
+}, _types__WEBPACK_IMPORTED_MODULE_0__["CHANGE_PRICE"], function (context, payload) {
+  context.commit(_types__WEBPACK_IMPORTED_MODULE_0__["CHANGE_PRICE"], payload);
+});
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: state,
   getters: getters,
@@ -53404,16 +53406,18 @@ var actions = {
 /*!*******************************************!*\
   !*** ./resources/js/store/types/index.js ***!
   \*******************************************/
-/*! exports provided: SALEPRODUCT, PRODUCTS_LIST */
+/*! exports provided: SALEPRODUCT, PRODUCTS_LIST, CHANGE_PRICE */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SALEPRODUCT", function() { return SALEPRODUCT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PRODUCTS_LIST", function() { return PRODUCTS_LIST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CHANGE_PRICE", function() { return CHANGE_PRICE; });
 //getters
 var SALEPRODUCT = 'customer/SALEPRODUCT';
 var PRODUCTS_LIST = 'customer/PRODUCTS_LIST';
+var CHANGE_PRICE = 'customer/CHANGE_PRICE';
 
 /***/ }),
 
