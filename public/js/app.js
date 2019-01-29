@@ -1842,6 +1842,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _store_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store/types */ "./resources/js/store/types/index.js");
 //
 //
 //
@@ -1875,23 +1877,81 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-// import { mapState } from 'vuex'
-// import * as types from '../store/types'
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CreateStores",
   data: function data() {
     return {};
   },
-  methods: {},
   computed: {
     types: function types() {
       return this.$store.state.storeTypes.types;
-    } // ...mapState({
-    //
-    // })
-
+    },
+    test: {
+      get: function get() {
+        return this.$store.getters[_store_types__WEBPACK_IMPORTED_MODULE_1__["TEST_INPUT"]];
+      },
+      set: function set(test) {
+        this.$store.dispatch(_store_types__WEBPACK_IMPORTED_MODULE_1__["MUTATE_TEST_INPUT"], test);
+      }
+    },
+    message: function message() {
+      return this.$store.getters.message;
+    },
+    stores: function stores() {
+      return this.$store.getters.stores;
+    }
   },
-  created: function created() {}
+  methods: {
+    insertStores: function insertStores() {
+      if (this.$route.params.id) {
+        this.$store.dispatch('updateStore', {
+          store: this.stores,
+          id: this.$route.params.id
+        });
+      } else {
+        this.$store.dispatch('insertStores', this.stores);
+      }
+    }
+  },
+  created: function created() {
+    if (this.$route.params.id) {
+      this.$store.dispatch('fetchStore', this.$route.params.id);
+    } else {
+      this.$store.dispatch('emptyStores', {});
+    }
+  }
 });
 
 /***/ }),
@@ -2065,8 +2125,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Stores"
+  name: "Stores",
+  computed: {
+    storelist: function storelist() {
+      return this.$store.getters.storelist;
+    }
+  },
+  methods: {
+    deleteStore: function deleteStore(id) {
+      return this.$store.dispatch('deleteStore', id);
+    }
+  },
+  created: function created() {
+    this.$store.dispatch('fetchStores');
+  }
 });
 
 /***/ }),
@@ -37776,38 +37882,154 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-row" }, [
-          _c("div", { staticClass: "form-group col-md-6" }, [
-            _c("label", { attrs: { for: "inputState" } }, [
-              _vm._v("Store Types")
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "form-row" }, [
+              _c("p", { staticClass: "text-success" }, [
+                _vm._v(_vm._s(_vm.message.message))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-row" }, [
+              _c("div", { staticClass: "form-group col-md-6" }, [
+                _c("label", [_vm._v("Title")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.stores.title,
+                      expression: "stores.title"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.stores.title },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.stores, "title", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-row" }, [
+              _c("div", { staticClass: "form-group col-md-6" }, [
+                _c("label", { attrs: { for: "inputState" } }, [
+                  _vm._v("Store Types")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.stores.types,
+                        expression: "stores.types"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "inputState" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.stores,
+                          "types",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { selected: "" } }, [
+                      _vm._v("Choose...")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.types, function(type) {
+                      return _c("option", { domProps: { value: type } }, [
+                        _vm._v(_vm._s(type))
+                      ])
+                    })
+                  ],
+                  2
+                )
+              ])
             ]),
             _vm._v(" "),
             _c(
-              "select",
-              { staticClass: "form-control", attrs: { id: "inputState" } },
-              [
-                _c("option", { attrs: { selected: "" } }, [
-                  _vm._v("Choose...")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.types, function(type) {
-                  return _c("option", { domProps: { value: type } }, [
-                    _vm._v(_vm._s(type))
-                  ])
-                })
-              ],
-              2
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { type: "submit" },
+                on: { click: _vm.insertStores }
+              },
+              [_vm._v("Submit")]
             )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "form-row" }, [
+              _c("div", { staticClass: "form-group col-md-6" }, [
+                _c("label", [_vm._v("Test value")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.test,
+                      expression: "test"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.test },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.test = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(_vm.test))]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-row" }, [
+              _c(
+                "div",
+                { staticClass: "form-group col-md-6" },
+                [
+                  _c("router-link", { attrs: { to: { name: "Store List" } } }, [
+                    _c("i", { staticClass: "fa fa-arrow-left" }),
+                    _vm._v(" Go Back To List\n                            ")
+                  ])
+                ],
+                1
+              )
+            ])
           ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-          [_vm._v("Submit")]
-        )
+        ])
       ])
     ])
   ])
@@ -37819,21 +38041,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("p", [_vm._v("Create Sores Page")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-row" }, [
-      _c("div", { staticClass: "form-group col-md-6" }, [
-        _c("label", { attrs: { for: "inputEmail4" } }, [_vm._v("Title")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "email", id: "inputEmail4" }
-        })
-      ])
     ])
   }
 ]
@@ -38157,23 +38364,82 @@ var render = function() {
     _c("div", { staticClass: "card" }, [
       _vm._m(0),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "card-body" },
-        [
-          _c("p", [_vm._v("Go to Create Page")]),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-8" }, [
+            _c("table", { staticClass: "table table-striped" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.storelist, function(store, index) {
+                  return _c("tr", [
+                    _c("th", { attrs: { scope: "row" } }, [
+                      _vm._v(_vm._s(index + 1))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(store.title ? store.title : ""))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(store.types ? store.types : ""))]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "btn btn-primary btn-sm",
+                            attrs: {
+                              to: {
+                                name: "Store Edit",
+                                params: { id: store.id }
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-pen" })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-warning btn-sm",
+                            on: {
+                              click: function($event) {
+                                _vm.deleteStore(store.id)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-trash" })]
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                }),
+                0
+              )
+            ])
+          ]),
           _vm._v(" "),
           _c(
-            "router-link",
-            {
-              staticClass: "btn btn-success btn-sm",
-              attrs: { to: { name: "Store Create" }, tag: "button" }
-            },
-            [_vm._v("Create Store")]
+            "div",
+            { staticClass: "col-md-4" },
+            [
+              _c("p", [_vm._v("Go to Create Page")]),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-success btn-sm",
+                  attrs: { to: { name: "Store Create" } }
+                },
+                [_vm._v("Create Store")]
+              )
+            ],
+            1
           )
-        ],
-        1
-      )
+        ])
+      ])
     ])
   ])
 }
@@ -38184,6 +38450,22 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h5", [_vm._v(" This is  Store Component")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Title")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Types")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Action")])
+      ])
     ])
   }
 ]
@@ -53469,15 +53751,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************!*\
   !*** ./resources/js/components/views/Nav.vue ***!
   \***********************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Nav_vue_vue_type_template_id_4bb909b2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Nav.vue?vue&type=template&id=4bb909b2& */ "./resources/js/components/views/Nav.vue?vue&type=template&id=4bb909b2&");
 /* harmony import */ var _Nav_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Nav.vue?vue&type=script&lang=js& */ "./resources/js/components/views/Nav.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Nav_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Nav_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -53507,7 +53788,7 @@ component.options.__file = "resources/js/components/views/Nav.vue"
 /*!************************************************************************!*\
   !*** ./resources/js/components/views/Nav.vue?vue&type=script&lang=js& ***!
   \************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53727,6 +54008,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
       path: 'create',
       name: 'Store Create',
       component: _components_views_CreateStores_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+    }, {
+      path: 'edit/:id',
+      name: 'Store Edit',
+      component: _components_views_CreateStores_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
     }]
   }]
 }));
@@ -53930,17 +54215,89 @@ var actions = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../types */ "./resources/js/store/types/index.js");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../types */ "./resources/js/store/types/index.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
+var _getters, _mutations, _actions;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 var state = {
-  types: ['grocery', 'Super Shop', 'meat', 'food']
+  types: ['grocery', 'Super Shop', 'meat', 'food'],
+  test: 0,
+  message: '',
+  stores: {},
+  storelist: {},
+  newStores: {}
 };
-var getters = {};
-var mutations = {};
-var actions = {};
+var getters = (_getters = {}, _defineProperty(_getters, _types__WEBPACK_IMPORTED_MODULE_0__["TEST_INPUT"], function (state) {
+  return state.test;
+}), _defineProperty(_getters, "message", function message(state) {
+  return state.message;
+}), _defineProperty(_getters, "storelist", function storelist(state) {
+  return state.storelist;
+}), _defineProperty(_getters, "stores", function stores(state) {
+  return state.stores;
+}), _getters);
+var mutations = (_mutations = {}, _defineProperty(_mutations, _types__WEBPACK_IMPORTED_MODULE_0__["MUTATE_TEST_INPUT"], function (state, payload) {
+  state.test = payload;
+}), _defineProperty(_mutations, "insertStores", function insertStores(state, payload) {
+  state.stores = {};
+  return state.message = payload;
+}), _defineProperty(_mutations, "fetchStores", function fetchStores(state, payload) {
+  return state.storelist = payload;
+}), _defineProperty(_mutations, "fetchStore", function fetchStore(state, payload) {
+  return state.stores = payload;
+}), _defineProperty(_mutations, "emptyStores", function emptyStores(state, payload) {
+  return vue__WEBPACK_IMPORTED_MODULE_1___default.a.set(state, 'stores', payload);
+}), _defineProperty(_mutations, "updateStore", function updateStore(state, payload) {
+  return state.message = payload;
+}), _defineProperty(_mutations, "deleteStore", function deleteStore(state, payload) {
+  console.log(payload);
+}), _mutations);
+var actions = (_actions = {}, _defineProperty(_actions, _types__WEBPACK_IMPORTED_MODULE_0__["MUTATE_TEST_INPUT"], function (_ref, payload) {
+  var commit = _ref.commit;
+  commit(_types__WEBPACK_IMPORTED_MODULE_0__["MUTATE_TEST_INPUT"], payload);
+}), _defineProperty(_actions, "insertStores", function insertStores(context, payload) {
+  return axios.post('/store-types', payload).then(function (response) {
+    context.commit('insertStores', response.data);
+    setTimeout(function () {
+      context.commit('insertStores', '');
+    }, 2000);
+  }).catch(function (error) {
+    console.log(error);
+  });
+}), _defineProperty(_actions, "fetchStores", function fetchStores(_ref2) {
+  var commit = _ref2.commit;
+  return axios.get('/store-types').then(function (response) {
+    commit('fetchStores', response.data);
+  }).catch(function (error) {
+    console.log(error);
+  });
+}), _defineProperty(_actions, "fetchStore", function fetchStore(_ref3, payload) {
+  var commit = _ref3.commit;
+  return axios.get('/store-types/' + payload + '/edit').then(function (response) {
+    commit('fetchStore', response.data);
+  }).catch(function (error) {
+    console.log(error);
+  });
+}), _defineProperty(_actions, "emptyStores", function emptyStores(context, payload) {
+  return context.commit('emptyStores', payload);
+}), _defineProperty(_actions, "updateStore", function updateStore(context, payload) {
+  return axios.patch('/store-types/' + payload.id, payload.store).then(function (response) {
+    context.commit('updateStore', response.data);
+  }).catch(function (error) {
+    console.log(error);
+  });
+}), _defineProperty(_actions, "deleteStore", function deleteStore(context, payload) {
+  axios.delete('/store-types/' + payload).then(function (response) {
+    context.commit('deleteStore', response.data);
+  }).catch(function (error) {
+    console.log(error);
+  });
+}), _actions);
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: state,
   getters: getters,
@@ -53954,7 +54311,7 @@ var actions = {};
 /*!*******************************************!*\
   !*** ./resources/js/store/types/index.js ***!
   \*******************************************/
-/*! exports provided: SALEPRODUCT, PRODUCTS_LIST, CHANGE_PRICE */
+/*! exports provided: SALEPRODUCT, PRODUCTS_LIST, CHANGE_PRICE, TEST_INPUT, MUTATE_TEST_INPUT */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53962,12 +54319,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SALEPRODUCT", function() { return SALEPRODUCT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PRODUCTS_LIST", function() { return PRODUCTS_LIST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CHANGE_PRICE", function() { return CHANGE_PRICE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TEST_INPUT", function() { return TEST_INPUT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MUTATE_TEST_INPUT", function() { return MUTATE_TEST_INPUT; });
 //state
 // export const STORE_TYPES = 'storeTypes/STORE_TYPES';
 //getters
 var SALEPRODUCT = 'customer/SALEPRODUCT';
 var PRODUCTS_LIST = 'customer/PRODUCTS_LIST';
 var CHANGE_PRICE = 'customer/CHANGE_PRICE';
+var TEST_INPUT = 'storeType/TEST_INPUT'; //actions
+
+var MUTATE_TEST_INPUT = 'storeType/MUTATE_TEST_INPUT';
 
 /***/ }),
 

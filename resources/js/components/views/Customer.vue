@@ -23,7 +23,7 @@
         name: "Customer",
 
         computed: {
-            //
+
             // saleProduct(){
             //     return this.$store.getters.saleProduct
             // }

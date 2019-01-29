@@ -13,6 +13,7 @@
 
 
 Route::resource('/products', 'ProductController');
+Route::resource('/store-types', 'StoreController');
 
 Route::get('/{qurystring?}', function (){
     return view('vue-home');

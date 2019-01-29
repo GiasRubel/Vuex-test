@@ -23,7 +23,8 @@ export default new Router({
             },
             children: [
                 {path:'', name:'Store List', component:Stores},
-                {path:'create', name:'Store Create', component:CreateStores}
+                {path:'create', name:'Store Create', component:CreateStores},
+                {path:'edit/:id', name:'Store Edit', component:CreateStores}
             ]
         },
 
