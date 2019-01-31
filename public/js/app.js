@@ -1912,7 +1912,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CreateStores",
   data: function data() {
-    return {};
+    return {
+      msg: {}
+    };
   },
   computed: {
     types: function types() {
@@ -1931,6 +1933,17 @@ __webpack_require__.r(__webpack_exports__);
     },
     stores: function stores() {
       return this.$store.getters.stores;
+    }
+  },
+  watch: {
+    message: function message(newMessage, oldMessage) {
+      var _this = this;
+
+      this.msg = newMessage;
+      console.log(this.msg);
+      setTimeout(function () {
+        _this.msg = {};
+      }, 2000);
     }
   },
   methods: {
@@ -2158,11 +2171,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Stores",
+  data: function data() {
+    return {
+      msg: {},
+      messages: ''
+    };
+  },
   computed: {
     storelist: function storelist() {
       return this.$store.getters.storelist;
+    },
+    message: function message() {
+      return this.$store.getters.message;
+    }
+  },
+  watch: {
+    message: function message(newMessage, oldMessage) {
+      var _this = this;
+
+      this.msg = newMessage;
+      console.log(this.msg);
+      setTimeout(function () {
+        _this.msg = {};
+      }, 2000);
     }
   },
   methods: {
@@ -37886,7 +37923,7 @@ var render = function() {
           _c("div", { staticClass: "col-md-6" }, [
             _c("div", { staticClass: "form-row" }, [
               _c("p", { staticClass: "text-success" }, [
-                _vm._v(_vm._s(_vm.message.message))
+                _vm._v(_vm._s(_vm.msg.message))
               ])
             ]),
             _vm._v(" "),
@@ -38367,6 +38404,18 @@ var render = function() {
       _c("div", { staticClass: "card-body" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-8" }, [
+            _vm.msg
+              ? _c("p", { staticClass: "text-danger" }, [
+                  _vm._v(_vm._s(_vm.msg.message))
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.$route.params.message
+              ? _c("p", { staticClass: "text-danger" }, [
+                  _vm._v(_vm._s(_vm.messages))
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _c("table", { staticClass: "table table-striped" }, [
               _vm._m(1),
               _vm._v(" "),
@@ -38433,7 +38482,7 @@ var render = function() {
                   staticClass: "btn btn-success btn-sm",
                   attrs: { to: { name: "Store Create" } }
                 },
-                [_vm._v("Create Store")]
+                [_vm._v("Create Store\n                    ")]
               )
             ],
             1
@@ -38449,7 +38498,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
-      _c("h5", [_vm._v(" This is  Store Component")])
+      _c("h5", [_vm._v(" This is Store Component")])
     ])
   },
   function() {
@@ -54216,11 +54265,13 @@ var actions = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../types */ "./resources/js/store/types/index.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../router */ "./resources/js/router/index.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_2__);
 var _getters, _mutations, _actions;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -54251,21 +54302,20 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, _types__WEBPACK_IM
 }), _defineProperty(_mutations, "fetchStore", function fetchStore(state, payload) {
   return state.stores = payload;
 }), _defineProperty(_mutations, "emptyStores", function emptyStores(state, payload) {
-  return vue__WEBPACK_IMPORTED_MODULE_1___default.a.set(state, 'stores', payload);
+  return vue__WEBPACK_IMPORTED_MODULE_2___default.a.set(state, 'stores', payload);
 }), _defineProperty(_mutations, "updateStore", function updateStore(state, payload) {
   return state.message = payload;
 }), _defineProperty(_mutations, "deleteStore", function deleteStore(state, payload) {
-  console.log(payload);
+  return state.message = payload;
 }), _mutations);
 var actions = (_actions = {}, _defineProperty(_actions, _types__WEBPACK_IMPORTED_MODULE_0__["MUTATE_TEST_INPUT"], function (_ref, payload) {
   var commit = _ref.commit;
   commit(_types__WEBPACK_IMPORTED_MODULE_0__["MUTATE_TEST_INPUT"], payload);
 }), _defineProperty(_actions, "insertStores", function insertStores(context, payload) {
   return axios.post('/store-types', payload).then(function (response) {
-    context.commit('insertStores', response.data);
-    setTimeout(function () {
-      context.commit('insertStores', '');
-    }, 2000);
+    context.commit('insertStores', response.data); // setTimeout(() => {
+    //     context.commit('insertStores', '')
+    // }, 2000)
   }).catch(function (error) {
     console.log(error);
   });
@@ -54288,12 +54338,21 @@ var actions = (_actions = {}, _defineProperty(_actions, _types__WEBPACK_IMPORTED
 }), _defineProperty(_actions, "updateStore", function updateStore(context, payload) {
   return axios.patch('/store-types/' + payload.id, payload.store).then(function (response) {
     context.commit('updateStore', response.data);
+    _router__WEBPACK_IMPORTED_MODULE_1__["default"].push({
+      name: 'Store List',
+      params: {
+        message: response.data.message
+      }
+    });
   }).catch(function (error) {
     console.log(error);
   });
-}), _defineProperty(_actions, "deleteStore", function deleteStore(context, payload) {
+}), _defineProperty(_actions, "deleteStore", function deleteStore(_ref4, payload) {
+  var dispatch = _ref4.dispatch,
+      commit = _ref4.commit;
   axios.delete('/store-types/' + payload).then(function (response) {
-    context.commit('deleteStore', response.data);
+    commit('deleteStore', response.data);
+    dispatch('fetchStores');
   }).catch(function (error) {
     console.log(error);
   });

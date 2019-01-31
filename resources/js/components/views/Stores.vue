@@ -2,12 +2,13 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h5> This is  Store Component</h5>
+                <h5> This is Store Component</h5>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-8">
-
+                        <p v-if="msg" class="text-danger">{{msg.message}}</p>
+                        <p v-if="$route.params.message" class="text-danger">{{messages}}</p>
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -23,11 +24,13 @@
                                 <td>{{store.title ? store.title : ''}}</td>
                                 <td>{{store.types ? store.types : ''}}</td>
                                 <td>
-                                    <router-link :to="{name:'Store Edit', params: {id:store.id} }" class="btn btn-primary btn-sm">
+                                    <router-link :to="{name:'Store Edit', params: {id:store.id} }"
+                                                 class="btn btn-primary btn-sm">
                                         <i class="fa fa-pen"></i>
                                     </router-link>
 
-                                    <button class="btn btn-warning btn-sm" @click="deleteStore(store.id)"> <i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-warning btn-sm" @click="deleteStore(store.id)"><i
+                                            class="fa fa-trash"></i></button>
                                 </td>
 
                             </tr>
@@ -37,7 +40,8 @@
                     </div>
                     <div class="col-md-4">
                         <p>Go to Create Page</p>
-                        <router-link :to="{name:'Store Create'}"  class="btn btn-success btn-sm">Create Store</router-link>
+                        <router-link :to="{name:'Store Create'}" class="btn btn-success btn-sm">Create Store
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -49,10 +53,33 @@
     export default {
         name: "Stores",
 
+        data() {
+            return {
+                msg: {},
+                messages: '',
+            }
+        },
+
         computed: {
             storelist() {
                 return this.$store.getters.storelist
-            }
+            },
+
+            message() {
+                return this.$store.getters.message
+            },
+
+        },
+
+        watch: {
+            message( newMessage, oldMessage) {
+                this.msg = newMessage;
+                console.log(this.msg)
+                setTimeout(() => {
+                    this.msg = {}
+                },2000)
+            },
+
         },
 
         methods: {

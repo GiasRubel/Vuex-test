@@ -1,4 +1,5 @@
 import * as types from '../types';
+import router from '../../router'
 import Vue from 'vue';
 
 const state = {
@@ -56,7 +57,7 @@ const mutations = {
     },
 
     deleteStore: (state, payload) => {
-        console.log(payload)
+        return state.message = payload;
     }
 };
 
@@ -69,9 +70,9 @@ const actions = {
     insertStores: (context, payload) => {
         return axios.post('/store-types', payload).then(response => {
             context.commit('insertStores', response.data);
-            setTimeout(() => {
-                context.commit('insertStores', '')
-            }, 2000)
+            // setTimeout(() => {
+            //     context.commit('insertStores', '')
+            // }, 2000)
         }).catch(error => {
             console.log(error)
         })
@@ -97,15 +98,17 @@ const actions = {
 
     updateStore: (context, payload) => {
         return axios.patch('/store-types/' + payload.id, payload.store).then(response => {
-            context.commit('updateStore', response.data)
+            context.commit('updateStore', response.data);
+            router.push({name:'Store List',params:{message:response.data.message}})
         }).catch(error => {
             console.log(error)
         })
     },
 
-    deleteStore: (context, payload) => {
+    deleteStore: ({dispatch, commit}, payload) => {
         axios.delete('/store-types/' + payload).then(response => {
-            context.commit('deleteStore', response.data)
+            commit('deleteStore', response.data);
+            dispatch('fetchStores')
         }).catch(error => {
             console.log(error)
         })

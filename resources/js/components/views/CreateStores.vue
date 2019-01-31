@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-row">
-                            <p class="text-success">{{message.message}}</p>
+                            <p class="text-success">{{msg.message}}</p>
                             <!--<p v-if="$route.params.id">{{$route.params.id}}</p>-->
                             <!--{{stores}}-->
                         </div>
@@ -69,8 +69,11 @@
         name: "CreateStores",
 
         data() {
-            return {}
+            return {
+                msg: {}
+            }
         },
+
 
 
         computed: {
@@ -94,6 +97,16 @@
 
             stores() {
                 return this.$store.getters.stores;
+            }
+        },
+
+        watch: {
+            message( newMessage, oldMessage) {
+                this.msg = newMessage;
+                console.log(this.msg)
+                setTimeout(() => {
+                    this.msg = {}
+                },2000)
             }
         },
 
