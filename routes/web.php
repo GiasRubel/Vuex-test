@@ -13,6 +13,7 @@
 
 
 Route::resource('/products', 'ProductController');
+Route::resource('/store-types', 'StoreController');
 
 Route::resource('/articles', 'ArticleController');
 
