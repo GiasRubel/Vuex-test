@@ -20,6 +20,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <router-link :to="{ name:'Product' }" class="dropdown-item">Product</router-link>
                             <router-link :to="{ name:'Customer' }" class="dropdown-item">Customer</router-link>
+                            <router-link :to="{ name:'Article' }" class="dropdown-item">Article</router-link>
 
                         </div>
                     </li>

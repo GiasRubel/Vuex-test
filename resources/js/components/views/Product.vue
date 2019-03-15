@@ -2,7 +2,7 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-body">
-               <h5> This is  Product Component</h5>
+                <h5> This is Product Component and List</h5>
                 <ul v-for="(product,index) in products" :key="product.id">
                     <li>{{ product.title }} => Price: {{product.price}}</li>
                 </ul>
@@ -14,7 +14,8 @@
 </template>
 
 <script>
-    import { mapState, mapActions } from 'vuex'
+    import {mapState, mapActions} from 'vuex'
+
     export default {
         name: "Product",
 
@@ -29,7 +30,7 @@
 
         },
 
-        methods:{
+        methods: {
             // reducePrice(){
             //     this.$store.dispatch('reducePrice')
             // }

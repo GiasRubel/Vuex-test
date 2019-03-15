@@ -14,10 +14,12 @@
 
 Route::resource('/products', 'ProductController');
 
-Route::get('/{qurystring?}', function (){
-    return view('vue-home');
-})->where('qurystring', '(.*)');
+Route::resource('/articles', 'ArticleController');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/{qurystring?}', function (){
+    return view('vue-home');
+})->where('qurystring', '(.*)');

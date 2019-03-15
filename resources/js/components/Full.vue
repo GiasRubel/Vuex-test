@@ -6,15 +6,12 @@
             </div>
         </div>
 
-        <!--<router-link :to="{ name:'Product' }" tag="button" type="button" class="btn btn-success btn-sm">Go to Customer-->
-            <!--<i class="fa fa-eye"></i></router-link>-->
+        <router-link :to="{ name:'Article' }" tag="button" type="button" class="btn btn-success btn-sm">Go to Article
+            <i class="fa fa-eye"></i></router-link>
         <div class="row">
-
                 <Product></Product>
 
-
                 <Customer></Customer>
-
         </div>
 
 
